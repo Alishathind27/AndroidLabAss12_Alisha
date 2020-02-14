@@ -76,7 +76,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(LONGITUDE, String.valueOf(lng));
         cv.put(ADDRESS, addr);
         cv.put(DATE_TIME, dateT);
-
+        System.out.println("print");
         return sqLiteDatabase.update(TABLE_NAME,cv,LOCATION_ID + "=?", new String[]{String.valueOf(id)}) > 0;
     }
 
