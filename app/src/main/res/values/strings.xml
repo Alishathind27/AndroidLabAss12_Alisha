@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Alisha_AndroidLabAssign</string>
+    <string name="api_key">AIzaSyAKK6fQ-6Lv2irP4EEndez3cBKzz5nKVL0</string>
+    <string name="api_key_places">AIzaSyAKK6fQ-6Lv2irP4EEndez3cBKzz5nKVL0</string>
+    <string name="map_types">map_types</string>
+    <string name="maptypes">MapTypes</string>
+
+    <string-array name="mapsTypes">
+       <item>Satellite</item>
+        <item>Hybrid</item>
+        <item>None</item>
+        <item>Normal</item>
+        <item>Terrain</item>
+    </string-array>
+
+</resources>

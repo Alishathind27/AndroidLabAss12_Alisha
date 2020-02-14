@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddLocation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    <Button
+        android:id="@+id/direction_btn"
+        android:onClick="onClick"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="0.5dp"
+        android:layout_weight="1"
+        android:background="#057"
+        android:text="direction"
+        android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/distance_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:background="#057"
+            android:text="distance"
+
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/Favourite_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Favourite"
+            android:textColor="#fff"
+            android:layout_weight="1"
+            android:layout_marginRight="0.5dp"
+            android:background="#057"
+            android:onClick="onClick" />
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:background="#057"
+            android:text="clear"
+            android:textColor="#fff"
+            android:layout_height="wrap_content"
+           />
+
+
+
+</LinearLayout>
+
+
+<fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#065"
+        >
+
+        <Button
+            android:id="@+id/restaurant_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+
+            android:onClick="onClick"
+            android:background="#057"
+            android:text="Restaurants"
+
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/cafe_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+
+
+            android:onClick="onClick"
+            android:background="#057"
+            android:text="Cafe"
+
+            android:textColor="#fff" />
+        <Button
+            android:id="@+id/museums_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+
+            android:background="#057"
+            android:onClick="onClick"
+            android:text="museums"
+            android:textColor="#fff" />
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+        android:background="#057">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="5dp"
+            android:text="@string/maptypes"
+
+            android:background="#057"
+            android:textSize="25sp"/>
+        <Spinner
+            android:id="@+id/mapTypes_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:background="#057"
+            android:entries="@array/mapsTypes"
+            android:textColor="#fff"
+             />
+    </LinearLayout>
+
+
+
+    </LinearLayout>
+</LinearLayout>
