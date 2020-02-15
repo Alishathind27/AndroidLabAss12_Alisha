@@ -3,6 +3,7 @@ package com.example.alisha_androidlabassign;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    DataBaseHelper mDatabase;
 
     Button Add;
     SwipeMenuListView listView;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        mDatabase = new DataBaseHelper(this);
         Add = findViewById(R.id.btn_add);
         listView = (SwipeMenuListView) findViewById(R.id.list_View);
 
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this,AddLocation.class);
+                Intent intent = new Intent(MainActivity.this, AddLocation.class);
                 startActivity(intent);
             }
         });
@@ -55,19 +58,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, AddLocation.class);
-                intent.putExtra("location",position);
+                intent.putExtra("location", position);
                 startActivity(intent);
             }
         });
 
 
-
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
-                SwipeMenuItem Edit = new SwipeMenuItem( getApplicationContext());
-                Edit.setBackground(new ColorDrawable(Color.rgb(0xC9,0xC9,0xCE)));
+                SwipeMenuItem Edit = new SwipeMenuItem(getApplicationContext());
+                Edit.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 Edit.setWidth(170);
                 Edit.setTitle("Edit");
                 Edit.setTitleSize(18);
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                 SwipeMenuItem Delete = new SwipeMenuItem(
                         getApplicationContext());
-                Delete.setBackground(new ColorDrawable(Color.rgb(0,118,0)));
+                Delete.setBackground(new ColorDrawable(Color.rgb(0, 118, 0)));
                 Delete.setWidth(170);
                 Delete.setTitle("delete");
                 Delete.setTitleSize(18);
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index){
+                switch (index) {
                     case 0:
                         System.out.println("edittt");
                         Intent intent = new Intent(MainActivity.this, AddLocation.class);
@@ -101,17 +102,22 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         System.out.println("deletteeee");
-                        FavPlace_Address.selected_place.remove(position);
 
-                        favouriteLocation = new String[FavPlace_Address.selected_place.size()];
+                        boolean b = mDatabase.deleteLocation(FavPlace_Address.selected_place.get(position).getId());
 
-                        for(int i = 0; i< FavPlace_Address.selected_place.size(); i++){
-                            favouriteLocation[i] = FavPlace_Address.selected_place.get(i).getAddress() + (i+1);
+
+                        if (b){
+                            loadLocations();
+                            System.out.println("if part");
+                        }else {
+
+                            System.out.println("else part ");
 
                         }
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_expandable_list_item_1,favouriteLocation);
-                        listView.setAdapter(arrayAdapter);
-                        arrayAdapter.notifyDataSetChanged();
+
+
+
+//
                         break;
                     default:
                         break;
@@ -120,15 +126,38 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
+      loadLocations();
     }
-
-
 
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        loadLocations();
+
+    }
+
+    private void loadLocations() {
+
+        FavPlace_Address.selected_place.clear();
+
+        Cursor cursor = mDatabase.getAllLocations();
+        if (cursor.moveToFirst()) {
+            do {
+                FavPlace_Address.selected_place.add(new FavPlace_Address(
+                        cursor.getInt(0),
+                        cursor.getDouble(1),
+                        cursor.getDouble(2),
+                        cursor.getString(3),
+                        cursor.getString(4)
+                ));
+            } while (cursor.moveToNext());
+            cursor.close();
+
+        }
+
+
         favouriteLocation = new String[FavPlace_Address.selected_place.size()];
 
 
@@ -140,8 +169,12 @@ public class MainActivity extends AppCompatActivity {
                 favouriteLocation[i] = FavPlace_Address.selected_place.get(i).getDate();
             }
         }
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, favouriteLocation);
-            listView.setAdapter(arrayAdapter);
-            arrayAdapter.notifyDataSetChanged();
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, favouriteLocation);
+        listView.setAdapter(arrayAdapter);
+        arrayAdapter.notifyDataSetChanged();
+
     }
+
+
+
 }

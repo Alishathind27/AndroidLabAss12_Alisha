@@ -8,9 +8,10 @@ public class FavPlace_Address {
     private  double longitude;
     private String date;
     private String visited;
+    private  int id;
 
-
-    public FavPlace_Address(double latitude, double longitude, String address,String date) {
+    public FavPlace_Address(int id,double latitude, double longitude, String address,String date) {
+       this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
@@ -32,6 +33,9 @@ public class FavPlace_Address {
         return date;
     }
 
+    public int getId(){
+        return id;
+    }
 
     public  static ArrayList<FavPlace_Address> selected_place = new ArrayList<>();
 

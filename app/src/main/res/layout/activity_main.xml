@@ -9,20 +9,19 @@
 
 
     <Button
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-
         android:layout_gravity="center"
+        android:background="#065"
+        android:layout_marginTop="10dp"
         android:text="Add fav Location"
-        android:id="@+id/btn_add"
-        android:textSize="20dp"/>
-
+        android:textSize="20dp" />
     <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/list_View"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:id="@+id/list_View">
+        android:layout_height="500dp"
+        android:layout_marginTop="20dp">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 

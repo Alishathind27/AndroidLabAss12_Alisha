@@ -52,9 +52,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class AddLocation extends AppCompatActivity implements OnMapReadyCallback{
+public class AddLocation extends AppCompatActivity implements OnMapReadyCallback,GoogleMap.OnMarkerDragListener{
 
-
+DataBaseHelper mDatabase;
     private static final String TAG = "MAPCHECK";
     GoogleMap mMap;
     Marker homeMarker;
@@ -75,7 +75,7 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
 
     double dir_lat;
     double dir_lon;
-
+    String date;
 
     public static boolean directionRequested;
     @Override
@@ -85,6 +85,7 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
 
 
         Spinner spinner = findViewById(R.id.mapTypes_spinner);
+        mDatabase = new DataBaseHelper(this);
 
 
 
@@ -301,11 +302,11 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
-                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
                 Intent intent = getIntent();
-                int abc = intent.getIntExtra("location",-1);
+                abc = intent.getIntExtra("location",-1);
                 if (abc != -1)
                 {
                     mMap.addMarker(new MarkerOptions().position(new LatLng(FavPlace_Address.selected_place.get(abc).getLatitude(),FavPlace_Address.selected_place.get(abc).getLongitude()))
@@ -391,12 +392,32 @@ public class AddLocation extends AppCompatActivity implements OnMapReadyCallback
 
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd  hh:mm:ss");
-                String date = dateFormat.format(calendar.getTime());
-                FavPlace_Address b = new FavPlace_Address(dest_lat,dest_lng,address,date);
-                FavPlace_Address.selected_place.add(b);
-
+                date = dateFormat.format(calendar.getTime());
+               // FavPlace_Address b = new FavPlace_Address(dest_lat,dest_lng,address,date);
+//                FavPlace_Address.selected_place.add(b);
+                 mDatabase.addLocation(dest_lat,dest_lng, address, date);
                 Toast.makeText(AddLocation.this, "Place added to favourite", Toast.LENGTH_SHORT).show();
             }
 
 
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
+        dest_lat = marker.getPosition().latitude;
+        dest_lng = marker.getPosition().longitude;
+
+        //FavPlace_Address ob = new FavPlace_Address(dest_lat,dest_lng,address,date);
+       // FavPlace_Address.selected_place.remove(abc);
+        //FavPlace_Address.selected_place.add(abc,ob);
+    }
 }

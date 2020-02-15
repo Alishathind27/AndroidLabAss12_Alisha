@@ -21,6 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATE_TIME = "dateTime";
 
 
+
   public DataBaseHelper(@Nullable Context context){
       super(context, DATABASE_NAME, null,DATABASE_VERSION);
 
@@ -55,7 +56,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       ContentValues cv = new ContentValues();
 
       cv.put(LATITUDE, String.valueOf(lat));
-      cv.put(LONGITUDE, String.valueOf(lat));
+      cv.put(LONGITUDE, String.valueOf(lng));
       cv.put(ADDRESS, addr);
       cv.put(DATE_TIME, dateT);
 
